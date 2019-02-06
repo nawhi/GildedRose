@@ -19,8 +19,41 @@ namespace GildedRose.Tests
 
             app.UpdateQuality();
 
-            Assert.Equal(app.Items[0].Quality, 9);
-            Assert.Equal(app.Items[0].SellIn, 9);
+            Assert.Equal(9, app.Items[0].Quality);
+            Assert.Equal(9, app.Items[0].SellIn);
+        }
+
+        [Fact]
+        public void Quality_Never_Drops_Below_Zero()
+        {
+            var app = new Program()
+            {
+                Items = new List<Item>
+                {
+                    new Item {Name = "Standard boring item", SellIn = 0, Quality = 0}
+                }
+            };
+
+            app.UpdateQuality();
+
+            Assert.Equal(0, app.Items[0].Quality);
+        }
+
+        [Fact]
+        public void SellIn_Can_Drop_Below_Zero()
+        {
+            var app = new Program()
+            {
+                Items = new List<Item>
+                {
+                    new Item {Name = "Standard boring item", SellIn = 0, Quality = 0}
+                }
+            };
+
+            app.UpdateQuality();
+
+            Assert.Equal(-1, app.Items[0].SellIn);
+
         }
     }
 }
