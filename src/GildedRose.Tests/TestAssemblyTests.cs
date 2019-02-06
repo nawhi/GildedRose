@@ -6,16 +6,20 @@ namespace GildedRose.Tests
 {
     public class TestAssemblyTests
     {
+        protected internal readonly Program app;
+
+        public TestAssemblyTests()
+        {
+            app = new Program()
+            {
+                Items = new List<Item>()
+            };
+        }
+
         [Fact]
         public void Standard_Item_Degrades_By_1()
         {
-            var app = new Program()
-            {
-                Items = new List<Item>
-                {
-                    new Item {Name = "Standard boring item", SellIn = 10, Quality = 10}
-                }
-            };
+            app.Items.Add(StandardItem(sellIn: 10, quality: 10));
 
             app.UpdateQuality();
 
@@ -26,13 +30,7 @@ namespace GildedRose.Tests
         [Fact]
         public void Quality_Never_Drops_Below_Zero()
         {
-            var app = new Program()
-            {
-                Items = new List<Item>
-                {
-                    new Item {Name = "Standard boring item", SellIn = 0, Quality = 0}
-                }
-            };
+            app.Items.Add(StandardItem(sellIn: 0, quality: 0));
 
             app.UpdateQuality();
 
@@ -42,18 +40,17 @@ namespace GildedRose.Tests
         [Fact]
         public void SellIn_Can_Drop_Below_Zero()
         {
-            var app = new Program()
-            {
-                Items = new List<Item>
-                {
-                    new Item {Name = "Standard boring item", SellIn = 0, Quality = 0}
-                }
-            };
+            app.Items.Add(StandardItem(sellIn: 0, quality: 0));
 
             app.UpdateQuality();
 
             Assert.Equal(-1, app.Items[0].SellIn);
 
+        }
+
+        private static Item StandardItem(int sellIn, int quality)
+        {
+            return new Item { Name = "Standard boring item", SellIn = sellIn, Quality = quality };
         }
     }
 }
