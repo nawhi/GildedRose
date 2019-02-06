@@ -82,6 +82,20 @@ namespace GildedRose.Tests
             Assert.Equal(12, app.Items[1].Quality);
         }
 
+        [Fact]
+        public void Item_Quality_Never_Goes_Above_50()
+        {
+            app.Items.Add(BrieItem(sellIn: 5, quality: 49));
+            app.Items.Add(BrieItem(sellIn: -1, quality: 49));
+
+            app.UpdateQuality();
+            app.UpdateQuality();
+
+            Assert.Equal(50, app.Items[0].Quality);
+            Assert.Equal(50, app.Items[1].Quality);
+
+        }
+
         private Item BrieItem(int sellIn, int quality)
         {
             return new Item { Name = "Aged Brie", SellIn = sellIn, Quality = quality };
