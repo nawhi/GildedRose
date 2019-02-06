@@ -96,6 +96,59 @@ namespace GildedRose.Tests
 
         }
 
+        [Fact]
+        public void Backstage_Passes_Increase_In_Quality()
+        {
+            app.Items.Add(BackStagePassItem(sellIn: 15, quality: 10));
+
+            app.UpdateQuality();
+
+            Assert.Equal(11, app.Items[0].Quality);
+        }
+
+        [Fact]
+        public void Backstage_Passes_Increase_In_Quality_By_2_When_SellIn_Is_10_Or_Less()
+        {
+            app.Items.Add(BackStagePassItem(sellIn: 10, quality: 10));
+            app.Items.Add(BackStagePassItem(sellIn: 9, quality: 10));
+
+            app.UpdateQuality();
+
+            Assert.Equal(12, app.Items[0].Quality);
+            Assert.Equal(12, app.Items[1].Quality);
+        }
+
+        [Fact]
+        public void Backstage_Passes_Increase_In_Quality_By_3_When_SellIn_Is_5_Or_Less()
+        {
+            app.Items.Add(BackStagePassItem(sellIn: 5, quality: 10));
+            app.Items.Add(BackStagePassItem(sellIn: 4, quality: 10));
+            app.Items.Add(BackStagePassItem(sellIn: 1, quality: 10));
+
+            app.UpdateQuality();
+
+            Assert.Equal(13, app.Items[0].Quality);
+            Assert.Equal(13, app.Items[1].Quality);
+            Assert.Equal(13, app.Items[2].Quality);
+        }
+
+        [Fact]
+        public void Backstage_Passes_Quality_Goes_to_0_When_SellIn_Is_0_Or_Less()
+        {
+            app.Items.Add(BackStagePassItem(sellIn: 0, quality: 10));
+            app.Items.Add(BackStagePassItem(sellIn: -1, quality: 0));
+
+            app.UpdateQuality();
+
+            Assert.Equal(0, app.Items[0].Quality);
+            Assert.Equal(0, app.Items[1].Quality);
+        }
+
+        private Item BackStagePassItem(int sellIn, int quality)
+        {
+            return new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = sellIn, Quality = quality };
+        }
+
         private Item BrieItem(int sellIn, int quality)
         {
             return new Item { Name = "Aged Brie", SellIn = sellIn, Quality = quality };
