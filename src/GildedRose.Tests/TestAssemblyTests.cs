@@ -186,7 +186,7 @@ namespace GildedRose.Tests
 
         private Item BrieItem(int sellIn, int quality)
         {
-            return new AgedBrieItem { Name = "Aged Brie", SellIn = sellIn, Quality = quality };
+            return new AgedBrieItem {  SellIn = sellIn, Quality = quality };
         }
 
         private static Item StandardItem(int sellIn, int quality)

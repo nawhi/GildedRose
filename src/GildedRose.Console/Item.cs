@@ -36,16 +36,6 @@
             }
         }
 
-        public bool IsConcertTicket()
-        {
-            return Name == "Backstage passes to a TAFKAL80ETC concert";
-        }
-
-        public bool IsAgedBrie()
-        {
-            return Name == "Aged Brie";
-        }
-
         public virtual void UpdateQuality()
         {
             DecrementQuality();
