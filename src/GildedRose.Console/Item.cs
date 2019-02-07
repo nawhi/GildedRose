@@ -48,16 +48,7 @@
 
         public virtual void UpdateQuality()
         {
-            if (IsAgedBrie())
-            {
-                IncrementQualityWithBoundsCheck();
-                DecrementSellIn();
-                if (IsExpired())
-                {
-                    IncrementQualityWithBoundsCheck();
-                }
-            }
-            else if (IsConcertTicket())
+            if (IsConcertTicket())
             {
                 IncrementConcertTicketQuality();
                 DecrementSellIn();
@@ -69,9 +60,7 @@
             else 
             {
                 DecrementQuality();
-
                 DecrementSellIn();
-
                 if (IsExpired())
                 {
                     DecrementQuality();
@@ -79,12 +68,12 @@
             }
         }
 
-        private void DecrementSellIn()
+        public void DecrementSellIn()
         {
             SellIn = SellIn - 1;
         }
 
-        private void DecrementQuality()
+        public void DecrementQuality()
         {
             if (Quality > 0)
             {
