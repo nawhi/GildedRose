@@ -144,6 +144,31 @@ namespace GildedRose.Tests
             Assert.Equal(0, app.Items[1].Quality);
         }
 
+        [Fact]
+        public void Sulfuras_Never_Has_To_Be_Sold()
+        {
+            app.Items.Add(SulfurasItem(sellIn: 5));
+
+            app.UpdateQuality();
+
+            Assert.Equal(5, app.Items[0].SellIn);
+        }
+
+        [Fact]
+        public void Sulfuras_Never_Decreases_In_Quality()
+        {
+            app.Items.Add(SulfurasItem(sellIn: 5));
+
+            app.UpdateQuality();
+
+            Assert.Equal(80, app.Items[0].Quality);
+        }
+
+        private Item SulfurasItem(int sellIn)
+        {
+            return new Item { Name = "Sulfuras, Hand of Ragnaros", SellIn = sellIn, Quality = 80 };
+        }
+
         private Item BackStagePassItem(int sellIn, int quality)
         {
             return new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = sellIn, Quality = quality };
