@@ -164,6 +164,16 @@ namespace GildedRose.Tests
             Assert.Equal(80, app.Items[0].Quality);
         }
 
+        [Fact(Skip = "Not implemented yet")]
+        public void Conjured_Items_Degrade_Twice_As_Fast_As_Normal_Items()
+        {
+            app.Items.Add(new Item { Name = "Conjured Mana Cake", SellIn = 3, Quality = 6 });
+
+            app.UpdateQuality();
+
+            Assert.Equal(4, app.Items[0].Quality);
+        }
+
         private Item SulfurasItem(int sellIn)
         {
             return new Item { Name = "Sulfuras, Hand of Ragnaros", SellIn = sellIn, Quality = 80 };
