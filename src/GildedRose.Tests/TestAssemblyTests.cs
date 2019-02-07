@@ -164,10 +164,10 @@ namespace GildedRose.Tests
             Assert.Equal(80, app.Items[0].Quality);
         }
 
-        [Fact(Skip = "Not implemented yet")]
+        [Fact]
         public void Conjured_Items_Degrade_Twice_As_Fast_As_Normal_Items()
         {
-            app.Items.Add(new StandardItem { Name = "Conjured Mana Cake", SellIn = 3, Quality = 6 });
+            app.Items.Add(new ConjuredItem { Name = "Conjured Mana Cake", SellIn = 3, Quality = 6 });
 
             app.UpdateQuality();
 
