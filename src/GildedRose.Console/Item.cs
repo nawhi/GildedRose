@@ -53,25 +53,11 @@
 
         public void UpdateQuality()
         {
-            if (IsAgedBrie())
+            if (!IsNotSulfuras())
             {
-                IncrementQualityWithBoundsCheck();
-            }
-            else if (IsConcertTicket())
-            {
-                IncrementConcertTicketQuality();
-            }
-            else if (IsNotSulfuras())
-            {
-                DecrementQuality();
-            }
 
-            if (IsNotSulfuras())
-            {
-                SellIn = SellIn - 1;
             }
-
-            if (IsExpired())
+            else
             {
                 if (IsAgedBrie())
                 {
@@ -79,13 +65,35 @@
                 }
                 else if (IsConcertTicket())
                 {
-                    Quality = Quality - Quality;
+                    IncrementConcertTicketQuality();
                 }
                 else if (IsNotSulfuras())
                 {
                     DecrementQuality();
                 }
+
+                if (IsNotSulfuras())
+                {
+                    SellIn = SellIn - 1;
+                }
+
+                if (IsExpired())
+                {
+                    if (IsAgedBrie())
+                    {
+                        IncrementQualityWithBoundsCheck();
+                    }
+                    else if (IsConcertTicket())
+                    {
+                        Quality = 0;
+                    }
+                    else
+                    {
+                        DecrementQuality();
+                    }
+                }
             }
+           
         }
 
         private void DecrementQuality()
