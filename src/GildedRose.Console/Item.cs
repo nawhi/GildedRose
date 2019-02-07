@@ -1,6 +1,9 @@
-﻿namespace GildedRose.Console
+﻿using System;
+using System.CodeDom;
+
+namespace GildedRose.Console
 {
-    public class Item
+    public abstract class Item
     {
         public string Name { get; set; }
 
@@ -8,12 +11,14 @@
 
         public int Quality { get; set; }
 
-        public bool IsExpired()
+        public abstract void UpdateQuality();
+
+        protected bool IsExpired()
         {
             return SellIn < 0;
         }
 
-        public void IncrementQualityWithBoundsCheck()
+        protected void IncrementQualityWithBoundsCheck()
         {
             if (Quality < 50)
             {
@@ -21,37 +26,12 @@
             }
         }
 
-        public void IncrementConcertTicketQuality()
-        {
-            IncrementQualityWithBoundsCheck();
-
-            if (SellIn < 11)
-            {
-                IncrementQualityWithBoundsCheck();
-            }
-
-            if (SellIn < 6)
-            {
-                IncrementQualityWithBoundsCheck();
-            }
-        }
-
-        public virtual void UpdateQuality()
-        {
-            DecrementQuality();
-            DecrementSellIn();
-            if (IsExpired())
-            {
-                DecrementQuality();
-            }
-        }
-
-        public void DecrementSellIn()
+        protected void DecrementSellIn()
         {
             SellIn = SellIn - 1;
         }
 
-        public void DecrementQuality()
+        protected void DecrementQuality()
         {
             if (Quality > 0)
             {

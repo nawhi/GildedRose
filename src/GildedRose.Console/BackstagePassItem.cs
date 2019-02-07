@@ -16,5 +16,20 @@
                 Quality = 0;
             }
         }
+
+        private void IncrementConcertTicketQuality()
+        {
+            IncrementQualityWithBoundsCheck();
+
+            if (SellIn < 11)
+            {
+                IncrementQualityWithBoundsCheck();
+            }
+
+            if (SellIn < 6)
+            {
+                IncrementQualityWithBoundsCheck();
+            }
+        }
     }
 }

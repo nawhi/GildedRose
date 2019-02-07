@@ -167,7 +167,7 @@ namespace GildedRose.Tests
         [Fact(Skip = "Not implemented yet")]
         public void Conjured_Items_Degrade_Twice_As_Fast_As_Normal_Items()
         {
-            app.Items.Add(new Item { Name = "Conjured Mana Cake", SellIn = 3, Quality = 6 });
+            app.Items.Add(new StandardItem { Name = "Conjured Mana Cake", SellIn = 3, Quality = 6 });
 
             app.UpdateQuality();
 
@@ -191,7 +191,7 @@ namespace GildedRose.Tests
 
         private static Item StandardItem(int sellIn, int quality)
         {
-            return new Item { Name = "Standard boring item", SellIn = sellIn, Quality = quality };
+            return new StandardItem { Name = "Standard boring item", SellIn = sellIn, Quality = quality };
         }
     }
 }
