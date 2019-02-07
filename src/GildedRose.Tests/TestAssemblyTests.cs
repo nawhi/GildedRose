@@ -181,7 +181,7 @@ namespace GildedRose.Tests
 
         private Item BackStagePassItem(int sellIn, int quality)
         {
-            return new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = sellIn, Quality = quality };
+            return new BackstagePassItem { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = sellIn, Quality = quality };
         }
 
         private Item BrieItem(int sellIn, int quality)

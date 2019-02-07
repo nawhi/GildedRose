@@ -48,23 +48,11 @@
 
         public virtual void UpdateQuality()
         {
-            if (IsConcertTicket())
-            {
-                IncrementConcertTicketQuality();
-                DecrementSellIn();
-                if (IsExpired())
-                {
-                    Quality = 0;
-                }
-            }
-            else 
+            DecrementQuality();
+            DecrementSellIn();
+            if (IsExpired())
             {
                 DecrementQuality();
-                DecrementSellIn();
-                if (IsExpired())
-                {
-                    DecrementQuality();
-                }
             }
         }
 
