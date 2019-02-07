@@ -51,29 +51,28 @@
             if (IsAgedBrie())
             {
                 IncrementQualityWithBoundsCheck();
+                DecrementSellIn();
+                if (IsExpired())
+                {
+                    IncrementQualityWithBoundsCheck();
+                }
             }
             else if (IsConcertTicket())
             {
                 IncrementConcertTicketQuality();
-            }
-            else
-            {
-                DecrementQuality();
-            }
-
-            DecrementSellIn();
-
-            if (IsExpired())
-            {
-                if (IsAgedBrie())
-                {
-                    IncrementQualityWithBoundsCheck();
-                }
-                else if (IsConcertTicket())
+                DecrementSellIn();
+                if (IsExpired())
                 {
                     Quality = 0;
                 }
-                else
+            }
+            else 
+            {
+                DecrementQuality();
+
+                DecrementSellIn();
+
+                if (IsExpired())
                 {
                     DecrementQuality();
                 }
