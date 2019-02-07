@@ -10,8 +10,8 @@ namespace GildedRose.Console
             System.Console.WriteLine("OMGHAI!");
 
             var app = new Program()
-                          {
-                              Items = new List<Item>
+            {
+                Items = new List<Item>
                                           {
                                               new Item {Name = "+5 Dexterity Vest", SellIn = 10, Quality = 20},
                                               new Item {Name = "Aged Brie", SellIn = 2, Quality = 0},
@@ -26,7 +26,7 @@ namespace GildedRose.Console
                                               new Item {Name = "Conjured Mana Cake", SellIn = 3, Quality = 6}
                                           }
 
-                          };
+            };
 
             app.UpdateQuality();
 
@@ -44,39 +44,37 @@ namespace GildedRose.Console
 
         private static void UpdateItem(Item currentItem)
         {
-            if (currentItem.Name != "Aged Brie" && currentItem.Name != "Backstage passes to a TAFKAL80ETC concert")
+            if (IsAgedBrie(currentItem))
+            {
+                if (currentItem.Quality < 50)
+                {
+                    IncrementQualityWithBoundsCheck(currentItem);
+
+                    if (IsConcertTicket(currentItem))
+                    {
+                        IncrementConcertTicketQuality(currentItem);
+                    }
+                }
+            }
+            else if (IsConcertTicket(currentItem))
+            {
+                if (currentItem.Quality < 50)
+                {
+                    currentItem.Quality = currentItem.Quality + 1;
+
+                    if (IsConcertTicket(currentItem))
+                    {
+                        IncrementConcertTicketQuality(currentItem);
+                    }
+                }
+            }
+            else
             {
                 if (currentItem.Quality > 0)
                 {
                     if (currentItem.Name != "Sulfuras, Hand of Ragnaros")
                     {
                         currentItem.Quality = currentItem.Quality - 1;
-                    }
-                }
-            }
-            else
-            {
-                if (currentItem.Quality < 50)
-                {
-                    currentItem.Quality = currentItem.Quality + 1;
-
-                    if (currentItem.Name == "Backstage passes to a TAFKAL80ETC concert")
-                    {
-                        if (currentItem.SellIn < 11)
-                        {
-                            if (currentItem.Quality < 50)
-                            {
-                                currentItem.Quality = currentItem.Quality + 1;
-                            }
-                        }
-
-                        if (currentItem.SellIn < 6)
-                        {
-                            if (currentItem.Quality < 50)
-                            {
-                                currentItem.Quality = currentItem.Quality + 1;
-                            }
-                        }
                     }
                 }
             }
@@ -107,11 +105,39 @@ namespace GildedRose.Console
                 }
                 else
                 {
-                    if (currentItem.Quality < 50)
-                    {
-                        currentItem.Quality = currentItem.Quality + 1;
-                    }
+                    IncrementQualityWithBoundsCheck(currentItem);
                 }
+            }
+        }
+
+        private static bool IsAgedBrie(Item currentItem)
+        {
+            return currentItem.Name == "Aged Brie";
+        }
+
+        private static void IncrementConcertTicketQuality(Item currentItem)
+        {
+            if (currentItem.SellIn < 11)
+            {
+                IncrementQualityWithBoundsCheck(currentItem);
+            }
+
+            if (currentItem.SellIn < 6)
+            {
+                IncrementQualityWithBoundsCheck(currentItem);
+            }
+        }
+
+        private static bool IsConcertTicket(Item currentItem)
+        {
+            return currentItem.Name == "Backstage passes to a TAFKAL80ETC concert";
+        }
+
+        private static void IncrementQualityWithBoundsCheck(Item currentItem)
+        {
+            if (currentItem.Quality < 50)
+            {
+                currentItem.Quality = currentItem.Quality + 1;
             }
         }
     }
