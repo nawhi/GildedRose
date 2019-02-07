@@ -176,7 +176,7 @@ namespace GildedRose.Tests
 
         private Item SulfurasItem(int sellIn)
         {
-            return new Item { Name = "Sulfuras, Hand of Ragnaros", SellIn = sellIn, Quality = 80 };
+            return new SulfurasItem { Name = "Sulfuras, Hand of Ragnaros", SellIn = sellIn, Quality = 80 };
         }
 
         private Item BackStagePassItem(int sellIn, int quality)

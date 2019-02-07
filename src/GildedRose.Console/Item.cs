@@ -46,18 +46,24 @@
             return Name == "Aged Brie";
         }
 
-        public bool IsNotSulfuras()
+        public virtual void UpdateQuality()
         {
-            return Name != "Sulfuras, Hand of Ragnaros";
-        }
-
-        public void UpdateQuality()
-        {
-            if (!IsNotSulfuras())
+            if (IsAgedBrie())
             {
-
+                IncrementQualityWithBoundsCheck();
+            }
+            else if (IsConcertTicket())
+            {
+                IncrementConcertTicketQuality();
             }
             else
+            {
+                DecrementQuality();
+            }
+
+            DecrementSellIn();
+
+            if (IsExpired())
             {
                 if (IsAgedBrie())
                 {
@@ -65,35 +71,18 @@
                 }
                 else if (IsConcertTicket())
                 {
-                    IncrementConcertTicketQuality();
+                    Quality = 0;
                 }
-                else if (IsNotSulfuras())
+                else
                 {
                     DecrementQuality();
                 }
-
-                if (IsNotSulfuras())
-                {
-                    SellIn = SellIn - 1;
-                }
-
-                if (IsExpired())
-                {
-                    if (IsAgedBrie())
-                    {
-                        IncrementQualityWithBoundsCheck();
-                    }
-                    else if (IsConcertTicket())
-                    {
-                        Quality = 0;
-                    }
-                    else
-                    {
-                        DecrementQuality();
-                    }
-                }
             }
-           
+        }
+
+        private void DecrementSellIn()
+        {
+            SellIn = SellIn - 1;
         }
 
         private void DecrementQuality()
